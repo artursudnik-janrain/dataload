@@ -1,8 +1,9 @@
 Janrain Data Loader
 ===================
 
-Command-line utility to load user profile data from a CSV data source into the
-Janrian platform.
+Example code demonstrating how to use the Janrain
+[/entity.bulkCreate](http://developers.janrain.com/rest-api/methods/user-data/entity/bulkcreate/)
+API to bulk load user profiles into the Janrain platform.
 
 
 Requires
@@ -66,6 +67,9 @@ which line needs to be corrected.
     ERROR dataload.reader: Line 23116: 'utf-8' codec can't decode byte 0xbf in position 7: invalid start byte
 
 ***Live Run***
+
+_Note: Always coordinate a production data migration with Janrain to ensure
+application rate limits and monitoring have been configured appropriately._
 
 The live run will be making API calls to Janrain and thus must be limited to
 ensure that it runs well below API rate limits. The `--workers` and
