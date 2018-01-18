@@ -11,7 +11,7 @@ def transform_password(value):
     loaded on a per-record basis.
     """
     return {
-        'type': "password-phpass-md5",
+        'type': "password-crypt-sha256",
         'value': value.strip()
     }
 
@@ -25,7 +25,8 @@ def transform_date(value):
         return
 
     input_formats = (
-        "%m/%d/%Y",
+        "%Y-%m-%d %H:%M:%S",
+        "%a, %b %w %H:%M:%S"
     )
 
     for try_format in input_formats:
@@ -44,6 +45,16 @@ def transform_plural(value):
     Python object.
     """
     return json.loads(value)
+
+
+def transform_clients_plural(value):
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    return [{
+        'clientId': value,
+        'firstLogin': timestamp,
+        'lastLogin': timestamp,
+        'name': "Data Migration"
+    }]
 
 
 def transform_boolean(value):

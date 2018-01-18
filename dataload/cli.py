@@ -31,7 +31,7 @@ class DataLoadArgumentParser(ApiArgumentParser):
         # Parse the YAML configuration here so that init_api() does not need to
         # read the config each time it's called which would not be thread safe.
         if args.config_key:
-            credentials = config.get_settings_at_path(args.config_key)
+            credentials = config.get_settings(args.config_key)
         elif args.default_client:
             credentials = config.default_client()
 

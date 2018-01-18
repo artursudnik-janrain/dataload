@@ -9,6 +9,8 @@ import logging.config
 import json
 import time
 import requests
+from getpass import getuser
+from socket import gethostname
 from dataload.reader import CsvBatchReader
 from dataload.cli import DataLoadArgumentParser
 from transformations import *
@@ -111,6 +113,10 @@ def load_batch(api, batch, type_name, timeout, min_time, dry_run):
         log_error(batch, "Dry run. Record was skipped.")
     else:
         #api.sign_requests = False
+        api.user_agent = "janrain-dataload.py User: {}, Host: {}".format(
+            getuser(),
+            gethostname()
+        )
         try:
             result = api.call('entity.bulkCreate', type_name=type_name,
                               timeout=timeout, all_attributes=batch.records)
@@ -148,7 +154,7 @@ def main():
         # file: transformations.py
         reader.add_transformation("password", transform_password)
         reader.add_transformation("birthday", transform_date)
-        reader.add_transformation("profiles", transform_plural)
+        reader.add_transformation("clients", transform_clients_plural)
 
         # The CSV file is processed faster than API calls can be made. When
         # loading large amounts of records this can result in a work queue that
