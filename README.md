@@ -133,13 +133,13 @@ flag is used to obtain usage information:
       -t TYPE_NAME, --type-name TYPE_NAME
                             entity type name (default: user)
       -b BATCH_SIZE, --batch-size BATCH_SIZE
-                            number of records per batch (default: 10)
+                            number of records per batch (default: 100)
       -a START_AT, --start-at START_AT
                             record number to start at (default: 1)
       -w WORKERS, --workers WORKERS
                             number of worker threads (default: 4)
       -q QUEUE_SIZE, --queue-size QUEUE_SIZE
-                            max number of batches queued (default: 25000)
+                            max number of batches queued (default: 1000)
       -o TIMEOUT, --timeout TIMEOUT
                             timeout in seconds for API calls (default: 10)
       -r RATE_LIMIT, --rate-limit RATE_LIMIT
