@@ -9,6 +9,7 @@ import logging.config
 import json
 import time
 import requests
+from math import ceil
 from getpass import getuser
 from socket import gethostname
 from dataload.reader import CsvBatchReader
@@ -172,6 +173,7 @@ def main():
 
         # Iterate over batches of rows in the CSV and dispatch load_batch()
         # calls to the worker threads.
+        start_time = time.time()
         futures = []
         for batch in reader:
             logger.debug(batch.records)
@@ -198,7 +200,10 @@ def main():
         for future in futures:
             future.result()
 
-        logger.info("Done!")
+        elapsed_time = ceil(time.time() - start_time)
+        m, s = divmod(elapsed_time, 60)
+        h, m = divmod(m, 60)
+        logger.info("Done. Eplapsed time: {:02d}:{:02d}:{:02d}".format(h, m, s))
 
 
 if __name__ == "__main__":
