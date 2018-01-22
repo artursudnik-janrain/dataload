@@ -43,7 +43,10 @@ def transform_plural(value):
     Transform the plural data represented in the CSV as a JSON string into a
     Python object.
     """
-    return json.loads(value)
+    if value:
+        return json.loads(value)
+    else:
+        return []
 
 
 def transform_boolean(value):
