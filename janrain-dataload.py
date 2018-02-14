@@ -10,6 +10,7 @@ import json
 import time
 import requests
 from dataload.reader import CsvBatchReader
+from dataload.reader import JsonBatchReader
 from dataload.cli import DataLoadArgumentParser
 from transformations import *
 from janrain.capture import ApiResponseError
@@ -140,7 +141,7 @@ def main():
         # Create a CSV "batch" reader which will read the CSV file in batches
         # of records converted to the JSON structure expected by the Janrain
         # API.
-        reader = CsvBatchReader(args.data_file, args.batch_size, args.start_at)
+        reader = JsonBatchReader(args.data_file, args.batch_size, args.start_at)
 
         # Any column in the CSV file can have a "transformation" function
         # defined to transform that data into the format needed for the Janrain
