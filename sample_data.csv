@@ -1,2 +1,2 @@
 email,password,givenName,familyName,birthday,primaryAddress.city,profiles
-micah@janrain.com,$P$BiAsT/abBIA/kaq92jKtNlISWom0IB/,Micah,Carrick,03/02/1981,Portland,"[{""identifier"": ""https://www.google.com/profiles/112548009676889564286"", ""domain"": ""google.com""},{""identifier"": ""http://www.facebook.com/profile.php?id=781080789"", ""domain"": ""facebook.com""}]"
+"micah@janrain.com","$P$BiAsT/abBIA/kaq92jKtNlISWom0IB/","Micah","Carrick","03/02/1981","Portland","[{""identifier"": ""https://www.google.com/profiles/112548009676889564286"", ""domain"": ""google.com""},{""identifier"": ""http://www.facebook.com/profile.php?id=781080789"", ""domain"": ""facebook.com""}]"

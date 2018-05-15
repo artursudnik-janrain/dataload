@@ -10,11 +10,11 @@ def transform_password(value):
     algorithm used. This allows password hashes from legacy systems to be
     loaded on a per-record basis.
     """
+
     return {
-        'type': "password-phpass-md5",
+        'type': "password-bcrypt",
         'value': value.strip()
     }
-
 
 def transform_date(value):
     """
