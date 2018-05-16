@@ -153,6 +153,8 @@ def main():
         reader.add_transformation("password", transform_password)
         reader.add_transformation("birthday", transform_date)
         reader.add_transformation("profiles", transform_plural)
+        reader.add_transformation("logins", transform_plural)
+        reader.add_transformation("statuses", transform_plural)
 
         # The CSV file is processed faster than API calls can be made. When
         # loading large amounts of records this can result in a work queue that
