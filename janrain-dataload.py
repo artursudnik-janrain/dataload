@@ -44,9 +44,11 @@ def log_error(batch, error_message):
     """
     try:
         for i in range(len(batch.records)):
-            fail_logger.info("{},{},{}".format(
+            print("+ + + ")
+            fail_logger.info("{},{},{},{}".format(
                     batch.id,
                     batch.start_line + i,
+                    batch.records[i]['email'],
                     error_message
                 )
             )
@@ -66,9 +68,10 @@ def log_result(batch, result):
     if 'stat' in result and result['stat'] == "ok":
         for i, uuid_result in enumerate(result['uuid_results']):
             if isinstance(uuid_result, dict) and uuid_result['stat'] == "error":
-                fail_logger.info("{},{},{}".format(
+                fail_logger.info("{},{},{},{}".format(
                         batch.id,
                         batch.start_line + i,
+                        batch.records[i]['email'],
                         uuid_result['error_description']
                     )
                 )
@@ -204,6 +207,6 @@ if __name__ == "__main__":
 
     # Add header row the the success and failure CSV logs
     success_logger.info("batch,line,uuid,email")
-    fail_logger.info("batch,line,error")
+    fail_logger.info("batch,line,email,error")
 
     main()
