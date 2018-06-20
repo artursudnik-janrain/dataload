@@ -36,6 +36,13 @@
             "formatter": "simple",
             "filename": "fail.csv",
             "mode": "w"
+        },
+        "uuid_handler": {
+            "class": "logging.FileHandler",
+            "level": "INFO",
+            "formatter": "simple",
+            "filename": "uuid.csv",
+            "mode": "w"
         }
     },
     "loggers": {
@@ -45,6 +52,10 @@
         },
         "fail_logger": {
             "handlers": ["fail_handler"],
+            "propagate": false
+        },
+        "uuid_logger":{
+            "handlers": ["uuid_handler"],
             "propagate": false
         },
         "requests.packages.urllib3.connectionpool": {

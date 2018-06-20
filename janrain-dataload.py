@@ -33,6 +33,7 @@ if sys.version_info[0] < 3:
 
 success_logger = logging.getLogger("success_logger")
 fail_logger = logging.getLogger("fail_logger")
+uuid_logger = logging.getLogger("uuid_logger")
 
 def log_error(batch, error_message):
     """
@@ -44,7 +45,6 @@ def log_error(batch, error_message):
     """
     try:
         for i in range(len(batch.records)):
-            print("+ + + ")
             fail_logger.info("{},{},{},{}".format(
                     batch.id,
                     batch.start_line + i,
@@ -55,7 +55,7 @@ def log_error(batch, error_message):
     except Exception as error:
         logger.error(str(error))
 
-def log_result(batch, result):
+def log_result(api, batch, result):
     """
     Log a row for each record in a batch result to the success or failure CSV
     log. A single batch in a result may contain both records that succeeded and
@@ -75,6 +75,15 @@ def log_result(batch, result):
                         uuid_result['error_description']
                     )
                 )
+                if uuid_result['error_description'] == "Attempted to update a duplicate value":
+                    print("writing uuid_log")
+                    result = api.call("entity", type_name="user", attribute_name="uuid", key_attribute="email", key_value='"{}"'.format(batch.records[i]['email']))
+                    print (result)
+                    uuid_logger.info("{},{}".format(
+                        batch.records[i]['email'],
+                        result['result']
+                    )
+            )
             else:
                 success_logger.info("{},{},{},{}".format(
                         batch.id,
@@ -117,7 +126,7 @@ def load_batch(api, batch, type_name, timeout, min_time, dry_run):
         try:
             result = api.call('entity.bulkCreate', type_name=type_name,
                               timeout=timeout, all_attributes=batch.records)
-            log_result(batch, result)
+            log_result(api, batch, result)
         except ApiResponseError as error:
             error_message = "API Error {}: {}".format(error.code, str(error))
             logger.warn(error_message)
@@ -208,5 +217,5 @@ if __name__ == "__main__":
     # Add header row the the success and failure CSV logs
     success_logger.info("batch,line,uuid,email")
     fail_logger.info("batch,line,email,error")
-
+    uuid_logger.info("email","uuid")
     main()
