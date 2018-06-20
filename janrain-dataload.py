@@ -76,14 +76,12 @@ def log_result(api, batch, result):
                     )
                 )
                 if uuid_result['error_description'] == "Attempted to update a duplicate value":
-                    print("writing uuid_log")
                     result = api.call("entity", type_name="user", attribute_name="uuid", key_attribute="email", key_value='"{}"'.format(batch.records[i]['email']))
-                    print (result)
                     uuid_logger.info("{},{}".format(
                         batch.records[i]['email'],
                         result['result']
                     )
-            )
+                )
             else:
                 success_logger.info("{},{},{},{}".format(
                         batch.id,
@@ -217,5 +215,5 @@ if __name__ == "__main__":
     # Add header row the the success and failure CSV logs
     success_logger.info("batch,line,uuid,email")
     fail_logger.info("batch,line,email,error")
-    uuid_logger.info("email","uuid")
+    uuid_logger.info("email,uuid")
     main()
