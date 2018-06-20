@@ -210,6 +210,9 @@ if __name__ == "__main__":
     # See: https://docs.python.org/3/howto/logging.html
     with open("logging_config.json", 'r') as f:
         config = json.loads(f.read())
+        config["handlers"]["success_handler"]["filename"] = "success_{}.csv".format(time.strftime("%a_%b_%d_%H%M_%S"))
+        config["handlers"]["fail_handler"]["filename"] = "fail_{}.csv".format(time.strftime("%a_%b_%d_%H%M_%S"))
+        config["handlers"]["uuid_handler"]["filename"] = "uuid_{}.csv".format(time.strftime("%a_%b_%d_%H%M_%S"))
     logging.config.dictConfig(config)
 
     # Add header row the the success and failure CSV logs
