@@ -63,3 +63,6 @@ venv
 janrain-dataload.log
 success.csv
 fail.csv
+
+# Scratch files
+scratch.*
