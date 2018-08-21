@@ -1,4 +1,5 @@
-import time
+iimport time
+import datetime
 import json
 import logging
 
@@ -37,6 +38,15 @@ def transform_date(value):
 
     raise ValueError("Could not parse date: {}".format(value))
 
+def transform_emailVerified(value):
+    """
+    ##### DEL-2678 Torstar migration  need to insert emailVerified with current time
+    """
+    
+    currentDT = datetime.datetime.now()
+    ##print (str(currentDT))
+
+    return (str(currentDT))
 
 def transform_plural(value):
     """
@@ -51,9 +61,25 @@ def transform_boolean(value):
     Transform boolean values that are blank into NULL so that they are not
     imported as empty strings.
     """
-    if value.lower in ("true", "t", "1"):
+    ##print(value)
+    ##print(value.lower())
+
+    if value.lower() in ("true", "t") or  (value == "1"): 
         return True
-    elif value.lower in ("false", "f", "0"):
+    elif value.lower() in ("false", "f") or (value == "0"):
         return False
     else:
         return None
+
+
+def transform_facebook(value):       ### #### DEL-2678 Torstar migration to consume facebookid column
+    
+    if value:
+
+        Url = "http://www.facebook.com/profile.php?id="+value
+
+        plural = '[{"identifier":"'+Url+'","domain": "facebook.com"}]'
+
+        return json.loads(plural)
+    else:
+        return json.loads('[]')

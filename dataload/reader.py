@@ -1,10 +1,12 @@
-import csv
+iimport csv
 import codecs
 from dataload.utils import expand_objects
 
 import logging
 logger = logging.getLogger(__name__)
 
+global rawRows
+rawRows = {}
 
 class BaseBatch(object):
     def __init__(self, records, batch_id=None):
@@ -27,13 +29,12 @@ class BaseBatchReader(object):
         self._transformations[attribute] = transformation_func
 
     def transform(self, column, value):
-        if not value:
-            return None
         if column in self._transformations:
             new_value = self._transformations[column](value)
             logger.debug("Transform '{}': {} => {}".format(column, value, new_value))
             return new_value
-
+        if not value:
+            return None
         return value
 
 
@@ -51,6 +52,7 @@ class CsvBatchReader(BaseBatchReader):
             raise Exception("Batch size must be greater than 2.")
 
     def utf8_validate(self):
+        
         logger.info("Validating UTF-8 encoding")
         f = codecs.open(self.csv_file, encoding='utf8', errors='strict')
         line_number = 1
@@ -82,11 +84,16 @@ class CsvBatchReader(BaseBatchReader):
                     yield CsvBatch(batch, batch_number, start_line, end_line)
                     batch = []
 
+                logger.info("should print a row here")
+                logger.info(row)
+
                 # process the row
                 transformed = [self.transform(self.header[i], value)
                     for i, value in enumerate(row)]
                 record = expand_objects(dict(zip(self.header, transformed)))
                 batch.append(record)
+
+                rawRows[line] = row
 
             batch_number += 1
             yield CsvBatch(batch, batch_number, start_line, end_line + 1)
