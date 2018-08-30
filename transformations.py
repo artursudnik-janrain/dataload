@@ -1,4 +1,4 @@
-iimport time
+import time
 import datetime
 import json
 import logging
@@ -40,9 +40,8 @@ def transform_date(value):
 
 def transform_emailVerified(value):
     """
-    ##### DEL-2678 Torstar migration  need to insert emailVerified with current time
+    ##### takes any value and returns current datetime.  Useful for migrations that require this to be computed at runtime
     """
-    
     currentDT = datetime.datetime.now()
     ##print (str(currentDT))
 
@@ -53,7 +52,10 @@ def transform_plural(value):
     Transform the plural data represented in the CSV as a JSON string into a
     Python object.
     """
-    return json.loads(value)
+    if value:
+        return json.loads(value)
+    else:
+        return json.loads('[]')
 
 
 def transform_boolean(value):
@@ -72,7 +74,9 @@ def transform_boolean(value):
         return None
 
 
-def transform_facebook(value):       ### #### DEL-2678 Torstar migration to consume facebookid column
+def transform_facebook(value):       
+
+### custom transformation for a profiles column during a migration where the only social accounts will be facebook.  Computes the profiles plural value based on user facebook id. 
     
     if value:
 

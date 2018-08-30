@@ -81,7 +81,7 @@ loaded.
 
 ***Result Logs***
 
-While the data is being loaded, 2 separate CSV log files are used to store the
+While the data is being loaded, 3 separate CSV log files are used to store the
 results *per record*. You can watch each of these logs in a separate terminal
 to keep an eye on errors as they are returned from the API.
 
@@ -95,6 +95,13 @@ created user:
 
     batch,line,uuid
     1,2,4f2db274-8d4c-4738-843f-6036fa21c802
+
+The 500 log stores results in the exact same format as the input csv.  Entries 
+in 500 log are due to API/Server errors where actual results may no be known or there
+is a high likelyhood that a re-run is necessary.  Re-running janrain-dataload with 500.csv 
+as the input file will process records that were not created, fail records that have already
+been created, or create a new 500 csv for future iterations.
+
 
 _Note: The result logs are overwritten with each run._
 
@@ -145,6 +152,8 @@ flag is used to obtain usage information:
       -r RATE_LIMIT, --rate-limit RATE_LIMIT
                             max API calls per second (default: 1)
       -x, --dry-run         process data without making any API calls
+      -e ERROR_RATE_DISPLAY_INTERVAL, --error-rate-display-interval ERROR_RATE_DISPLAY_INTERVAL
+                            Display error stats at runtime every n batches (default: 10)
 
 
 
@@ -199,11 +208,36 @@ application log and the result logs.
 * `stdout` - Application log at the INFO log level.
 * `log.txt` - Application log (same as stdout) at the DEBUG log level.
 * `fail.csv` - Result log for records which failed to get imported.
+* `500.csv` - Result log for records that may need to be imported again without adjustment.
 * `janrain-dataload.log` - Result log for records which were successfully imported.
 
 The formatting, filenames, log level, and other parameters can be configured for
 the various loggers using the configuration file `logging_config.json`. See the
 [Python Logging HowTo](https://docs.python.org/3/howto/logging.html) for details.
+
+
+Additional Logging
+-------
+* `500.csv` - Hard coded result log for records that may need to be imported again without adjustment.
+
+
+Automatic rate limiting
+-------
+
+The utility detects when API rate limits have been breached and automatically slows down the request rate 
+so that future requests have a better chance of succeeding. If API rate limit has been breached, each batch
+automatically takes +60 seconds wait time to execute.  Upon successful respons from /entity.bulkCreate   
+the wait time is reduced by 1 second per batch until the original rate limit (+1 sec) is in place again.
+
+
+Stats at runtime
+-------
+
+-e ERROR_RATE_DISPLAY_INTERVAL argument can be used to configure a runtime logging of usesful statistics.  
+This is displayed per -e number pf prcessed batches:
+
+Time Elapsed: 0.0 mins  500 error Count: 0  Error Count: 0/9  0.0 %   0 records to process  760.3 records per minute  0.0 mins remaining
+
 
 
 Tips and Best Practices
@@ -212,9 +246,10 @@ Tips and Best Practices
 * Use automation to generate the test data files to ensure that the exact same
   processes can generate data files for a production run.
 * Adjust date/time values into UTC.
-* Fine tune batch sizes with the `--batch-size` argument rather than
-  increasing the `--timeout` argument. API calls should not take longer than 10
-  seconds.
+* Fine tune performance with the `--batch-size` , `--workers` , `--rate-limit`
+* A decent starting point is `-b 200` , `-w 5` , `-r 2`  
+* A general safe migration estimate is `10,000 records per minute`
+
 * Keep the rate of the data load *well under* the application rate limit so as
   not to impact API usage from other sources (especially on production
   environments).

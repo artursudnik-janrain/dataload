@@ -1,4 +1,4 @@
-iimport csv
+import csv
 import codecs
 from dataload.utils import expand_objects
 
@@ -33,8 +33,6 @@ class BaseBatchReader(object):
             new_value = self._transformations[column](value)
             logger.debug("Transform '{}': {} => {}".format(column, value, new_value))
             return new_value
-        if not value:
-            return None
         return value
 
 
@@ -84,8 +82,8 @@ class CsvBatchReader(BaseBatchReader):
                     yield CsvBatch(batch, batch_number, start_line, end_line)
                     batch = []
 
-                logger.info("should print a row here")
-                logger.info(row)
+                ##Debug  logger.info("should print a row here")
+                ##Debug   logger.info(row)
 
                 # process the row
                 transformed = [self.transform(self.header[i], value)

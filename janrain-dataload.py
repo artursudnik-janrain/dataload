@@ -48,8 +48,9 @@ new_min_time = 0
 # API call or an error message and log the result for each record in a batch to
 # the appropriate CSV log file.
 #
-# Successfully loaded records are logged to 'logs/success.csv' and records which
-# fail are logged to 'logs/fail.csv'.
+# Successfully loaded records are logged to 'success.csv' and records which
+# fail are logged to 'fail.csv'.  Some records that fail due to certain API errors 
+# are logged in 500.csv, which is in a format that can be manually retried by dataload.   
 
 success_logger = logging.getLogger("success_logger")
 fail_logger = logging.getLogger("fail_logger")
@@ -234,7 +235,6 @@ def load_batch(api, batch, type_name, timeout, min_time, dry_run):
         errorRateRound = round(errorRate,4)
 
         logger.info("Time Elapsed: "+str(elapsedTimeMinRound)+" mins  "+"500 error Count: "+str(total500Count)+"  Error Count: "+str(totalErrorCount)+"/"+str(totalBatchCount)+"  "+str(errorRateRound)+" %   "+str(linesLeft)+" records to process  "+str(processRateRound)+ " records per minute  "+str(remainingTimeMinRound)+" mins remaining" )   
-
 
     logger.info("Batch #{} complete" \
         .format(batch.id))

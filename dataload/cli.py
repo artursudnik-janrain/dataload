@@ -25,6 +25,8 @@ class DataLoadArgumentParser(ApiArgumentParser):
                           help="max API calls per second (default: 1)")
         self.add_argument('-x', '--dry-run', action="store_true",
                           help="process data without making any API calls")
+        self.add_argument('-e', '--error-rate-display-interval', type=int, default=10,
+                          help="Display error stats at runtime every n batches (default: 10)")
 
     def parse_args(self, args=None, namespace=None):
         args = super(ApiArgumentParser, self).parse_args(args, namespace)

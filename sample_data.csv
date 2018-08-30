@@ -1,2 +1,10 @@
 email,password,givenName,familyName,birthday,primaryAddress.city,profiles
 micah@janrain.com,$P$BiAsT/abBIA/kaq92jKtNlISWom0IB/,Micah,Carrick,03/02/1981,Portland,"[{""identifier"": ""https://www.google.com/profiles/112548009676889564286"", ""domain"": ""google.com""},{""identifier"": ""http://www.facebook.com/profile.php?id=781080789"", ""domain"": ""facebook.com""}]"
+jeff@janrain.com,$P$BiAsT/abBIA/34ghj82shncdjj83sqgstawn/,Jeff,Mitchell,10/28/1976,Portland,"[{""identifier"": ""https://www.google.com/profiles/122234673234889875321"", ""domain"": ""google.com""},{""identifier"": ""http://www.facebook.com/profile.php?id=987532222"", ""domain"": ""facebook.com""}]"
+bill@janrain.com,$P$BiAsT/abBIA/23eshhhgdbq12w90osdtnvdf/,Bill,Smith,11/17/1966,Portland,""
+kat@janrain.com,,Kat,Brown,09/07/1987,Portland,""
+ben@janrain.com,,Ben,Stevens,10/07/1967,Portland,""
+bruce@janrain.com,,Bruce,Metzger,02/07/1977,Portland,""
+emily@janrain.com,,Emily,Kuntz,02/11/1979,Portland,""
+brady@janrain.com,,Brady,Bunch,04/04/1984,Portland,""
+john@janrain.com,,John,Doe,06/06/1986,Portland,""
