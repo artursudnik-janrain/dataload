@@ -63,3 +63,4 @@ venv
 janrain-dataload.log
 success.csv
 fail.csv
+500.csv
