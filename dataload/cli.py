@@ -27,6 +27,8 @@ class DataLoadArgumentParser(ApiArgumentParser):
                           help="process data without making any API calls")
         self.add_argument('-e', '--error-rate-display-interval', type=int, default=10,
                           help="Display error stats at runtime every n batches (default: 10)")
+        self.add_argument('-mqs', '--max-queue-size-sleep', type=int, default=90,
+                          help="Time in secs each thread will sleep if max queue size is detected (default: 90)")
 
     def parse_args(self, args=None, namespace=None):
         args = super(ApiArgumentParser, self).parse_args(args, namespace)

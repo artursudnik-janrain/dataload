@@ -246,7 +246,8 @@ Tips and Best Practices
 * Use automation to generate the test data files to ensure that the exact same
   processes can generate data files for a production run.
 * Adjust date/time values into UTC.
-* Fine tune performance with the `--batch-size` , `--workers` , `--rate-limit`
+* Fine tune performance with the `--batch-size` , `--workers` , `--rate-limit` , `--timeout`
+* API calls should not take longer than 10 seconds as a general rule
 * A decent starting point is `-b 200` , `-w 5` , `-r 2`  
 * A general safe migration estimate is `10,000 records per minute`
 

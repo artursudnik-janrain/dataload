@@ -63,6 +63,9 @@ def log_error(batch, error_message):
         batch          - A dataload.reader.CsvBatch instance
         error_message  - Error message describing why the row was not imported
     """
+
+    # remove email from this block if it is not being imported as a unique attribute
+
     try:
         for i in range(len(batch.records)):
             fail_logger.info("{},{},{},{}".format(
@@ -85,6 +88,9 @@ def log_result(batch, result):
         batch   - A dataload.reader.CsvBatch instance
         result  - A dictionary representing the JSON result from the Janrain API
     """
+
+    # remove email from this block if it is not being imported as a unique attribute
+
     if 'stat' in result and result['stat'] == "ok":
         for i, uuid_result in enumerate(result['uuid_results']):
             if isinstance(uuid_result, dict) and uuid_result['stat'] == "error":
@@ -338,7 +344,7 @@ def main():
             queue_size = executor._work_queue.qsize()
             if queue_size >= args.queue_size:
                 logger.warn("Maximum queue size reached: {}".format(queue_size))
-                time.sleep(90)   ## increased from 60 to combat server memory issues, should be configurable in the future
+                time.sleep(args.MAX_QUEUE_SIZE_SLEEP)
 
         # Iterate over the future results to raise any uncaught exceptions. Note
         # that this means uncaught exceptions will not be raised until AFTER all
@@ -358,7 +364,8 @@ if __name__ == "__main__":
     logging.config.dictConfig(config)
 
     # Add header row the the success and failure CSV logs
+    # email is added here because it is usually a unique identifier for import.  Remove email if it isn't a unique attribute being imported.
     success_logger.info("batch,line,uuid,email")
-    fail_logger.info("batch,line,email,error")    ### email is added here because it is usually a unique identifier for import
+    fail_logger.info("batch,line,email,error")    
 
     main()

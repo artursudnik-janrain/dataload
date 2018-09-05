@@ -82,9 +82,6 @@ class CsvBatchReader(BaseBatchReader):
                     yield CsvBatch(batch, batch_number, start_line, end_line)
                     batch = []
 
-                ##Debug  logger.info("should print a row here")
-                ##Debug   logger.info(row)
-
                 # process the row
                 transformed = [self.transform(self.header[i], value)
                     for i, value in enumerate(row)]
