@@ -166,7 +166,7 @@ def load_batch(api, batch, type_name, timeout, min_time, dry_run):
         dry_run    - Set to True to skip making API calls
     """
 
-    parser = DataLoadArgumentParser()  ## make additional arguments available inside this function
+    parser = DataLoadArgumentParser()  ## make additional arguments available inside this function.  Refactor : use kwargs instead.
     args = parser.parse_args()
 
     last_time = time.time()
