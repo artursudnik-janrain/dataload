@@ -8,6 +8,7 @@ import logging
 import logging.config
 import json
 import time
+import datetime
 import requests
 from dataload.reader import CsvBatchReader
 from dataload.cli import DataLoadArgumentParser
@@ -200,6 +201,8 @@ if __name__ == "__main__":
     # See: https://docs.python.org/3/howto/logging.html
     with open("logging_config.json", 'r') as f:
         config = json.loads(f.read())
+        config["handlers"]["success_handler"]["filename"] = "success_{}.csv".format(datetime.datetime.now().strftime("%b_%d_%Y_%H_%M"))
+        config["handlers"]["fail_handler"]["filename"] = "success_{}.csv".format(datetime.datetime.now().strftime("%b_%d_%Y_%H_%M"))
     logging.config.dictConfig(config)
 
     # Add header row the the success and failure CSV logs
