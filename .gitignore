@@ -63,3 +63,5 @@ venv
 janrain-dataload.log
 success.csv
 fail.csv
+
+*_creds.sh

@@ -156,7 +156,7 @@ def main():
         # uses up a very large amount of memory. The 'queue_size' argument
         # limits the amount of memory consumed at the cost of pausing script
         # execution.
-        executor._work_queue.maxsize = args.queue_size
+        # executor._work_queue.maxsize = args.queue_size
 
         # Calculate minimum time per worker thread
         if args.rate_limit > 0:
