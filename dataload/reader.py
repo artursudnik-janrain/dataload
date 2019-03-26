@@ -46,12 +46,19 @@ class CsvBatchReader(BaseBatchReader):
         self.header = None
         self.start_at = start_at
         self.plural_processor = None
+        self.fileHasBOM = False
 
         if self.batch_size <=2:
             raise Exception("Batch size must be greater than 2.")
 
     def utf8_validate(self):
         logger.info("Validating UTF-8 encoding")
+        # check for BOM first - usually because file was exported from MS Excel
+        with open(self.csv_file, "rb") as f:
+            if(f.read(3) == b'\xef\xbb\xbf'):
+                logger.info("Byte Order Mark detected.")
+                self.fileHasBOM = True
+            f.close()
         f = codecs.open(self.csv_file, encoding='utf8', errors='strict')
         line_number = 1
         try:
@@ -64,6 +71,9 @@ class CsvBatchReader(BaseBatchReader):
     def __iter__(self):
         self.utf8_validate()
         with open(self.csv_file, encoding="utf-8") as f:
+            # if the file has a BOM, start reading after those bytes
+            if self.fileHasBOM:
+                f.seek(3)
             reader = csv.reader(f, delimiter=self.delimiter)
             batch = []
             batch_number = 0
