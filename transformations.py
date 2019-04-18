@@ -11,7 +11,7 @@ def transform_password(value):
     loaded on a per-record basis.
     """
     return {
-        'type': "password-phpass-md5",
+        'type': "password-md5",
         'value': value.strip()
     }
 
