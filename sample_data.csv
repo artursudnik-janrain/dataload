@@ -1,2 +1,2 @@
-email,password,givenName,familyName,birthday,primaryAddress.city,profiles
-micah@janrain.com,$P$BiAsT/abBIA/kaq92jKtNlISWom0IB/,Micah,Carrick,03/02/1981,Portland,"[{""identifier"": ""https://www.google.com/profiles/112548009676889564286"", ""domain"": ""google.com""},{""identifier"": ""http://www.facebook.com/profile.php?id=781080789"", ""domain"": ""facebook.com""}]"
+email,givenName,familyName,displayName,password,mobileNumber,gender,birthday,primaryAddress.phone,primaryAddress.address1,primaryAddress.address2,primaryAddress.city,primaryAddress.zip,primaryAddress.stateAbbreviation,primaryAddress.country,created,clients,optIn.status
+email+0@example.com,John,Doe,John,Coaizm,202-555-0159,M,01/29/1881,202-555-0106,1427 Weekley Stree,,San Antonio,78205,TX,US,1875-08-02 15:28:31,"[{""clientId"": ""62652011"", ""name"": ""Client Name 0""}, {""clientId"": ""11352827"", ""name"": ""Client Name 1""}]",T

@@ -1,0 +1,122 @@
+{
+    "sample": {
+        "separator": ",",
+        "file":
+            {
+                "filename_pattern": "sample_records_{}.csv",
+                "filename_pattern_replace": "%b_%d_%Y_%H_%M_%S"
+            },
+        "min_length": 10,
+        "max_length": 50,
+        "fields": [
+            {
+                "name": "email",
+                "type": "string",
+                "required": 1,
+                "format": "email+{index}@example.com"
+            },
+            {
+                "name": "givenName",
+                "type": "string",
+                "required": 1
+            },
+            {
+                "name": "familyName",
+                "type": "string",
+                "required": 1
+            },
+            {
+                "name": "displayName",
+                "type": "string",
+                "required": 1
+            },
+            {
+                "name": "password",
+                "type": "password",
+                "required": 1,
+                "min_length": 6,
+                "max_length": 10,
+                "predefined_password_list": [
+                    {
+                        "type": "password-md5",
+                        "value": "2f23fa3579f3f75175793649115c1b25"
+                    },
+                    {
+                        "type": "password-sha",
+                        "value": "54e8d2e15d3caa89aa3f82c8c0428ad5742f056c"
+                    },
+                    {
+                        "type": "password-base64",
+                        "value": "UGFzczEyMw=="
+                    }
+                ]
+            },
+            {
+                "name": "mobileNumber",
+                "type": "string",
+                "required": 0
+            },
+            {
+                "name": "gender",
+                "type": "gender",
+                "required": 0
+            },
+            {
+                "name": "birthday",
+                "type": "date",
+                "required": 0
+            },
+            {
+                "name": "primaryAddress.phone",
+                "type": "string",
+                "required": 0
+            },
+            {
+                "name": "primaryAddress.address1",
+                "type": "string",
+                "required": 0
+            },
+            {
+                "name": "primaryAddress.address2",
+                "type": "string",
+                "required": 0
+            },
+            {
+                "name": "primaryAddress.city",
+                "type": "string",
+                "required": 0
+            },
+            {
+                "name": "primaryAddress.zip",
+                "type": "string",
+                "required": 0
+            },
+            {
+                "name": "primaryAddress.stateAbbreviation",
+                "type": "string",
+                "required": 0
+            },
+            {
+                "name": "primaryAddress.country",
+                "type": "string",
+                "required": 0
+            },
+            {
+                "name": "created",
+                "type": "datetime",
+                "required": 1
+            },
+            {
+                "name": "clients",
+                "type": "client",
+                "required": 0,
+                "format": "{\"clientId\":\"\", \"name\":\"\"}"
+            },
+            {
+                "name": "optIn.status",
+                "type": "boolean",
+                "required": 0
+            }
+        ]
+    }
+}

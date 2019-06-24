@@ -20,60 +20,38 @@
             "class": "logging.handlers.RotatingFileHandler",
             "level": "DEBUG",
             "formatter": "standard",
-            "filename": "dataload.log",
+            "filename": "dataload_rollback.log",
             "maxBytes": 524288000
-        },        
+        },
         "info_file_handler": {
             "class": "logging.handlers.RotatingFileHandler",
             "level": "INFO",
             "formatter": "simple",
-            "filename": "dataload_info.log",
+            "filename": "dataload_rollback_info.log",
             "maxBytes": 524288000
         },
-        "success_handler": {
+        "success_rollback_handler": {
             "class": "logging.FileHandler",
             "level": "INFO",
             "formatter": "simple",
-            "filename": "success_{}.csv",
+            "filename": "rollback_success_{}.csv",
             "mode": "w"
         },
-        "fail_handler": {
+        "fail_rollback_handler": {
             "class": "logging.FileHandler",
             "level": "INFO",
             "formatter": "simple",
-            "filename": "fail_{}.csv",
-            "mode": "w"
-        },
-        "update_success_handler": {
-            "class": "logging.FileHandler",
-            "level": "INFO",
-            "formatter": "simple",
-            "filename": "update_success_{}.csv",
-            "mode": "w"
-        },
-        "update_fail_handler": {
-            "class": "logging.FileHandler",
-            "level": "INFO",
-            "formatter": "simple",
-            "filename": "update_fail_{}.csv",
+            "filename": "rollback_fail_{}.csv",
             "mode": "w"
         }
     },
     "loggers": {
-        "success_logger": {
-            "handlers": ["success_handler"],
+        "success_rollback_logger": {
+            "handlers": ["success_rollback_handler"],
             "propagate": false
         },
-        "fail_logger": {
-            "handlers": ["fail_handler"],
-            "propagate": false
-        },
-        "update_success_logger": {
-            "handlers": ["update_success_handler"],
-            "propagate": false
-        },
-        "update_fail_logger": {
-            "handlers": ["update_fail_handler"],
+        "fail_rollback_logger": {
+            "handlers": ["fail_rollback_handler"],
             "propagate": false
         },
         "requests.packages.urllib3.connectionpool": {
@@ -86,6 +64,6 @@
     "root": {
         "level": "DEBUG",
         "handlers": ["console_handler", "info_file_handler", "debug_file_handler"],
-        "propagate": true
+        "propogate": true
     }
 }
