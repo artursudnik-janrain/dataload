@@ -2,3 +2,4 @@ janrain-python-api==0.4.0
 PyYAML==3.13
 requests==2.20.1
 datetime
+tqdm
