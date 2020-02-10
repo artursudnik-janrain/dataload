@@ -162,20 +162,6 @@ def update_record(api, args, record_info, min_time, pbar, plurals):
                                  timeout=args.timeout, value=json_data)
         results.append(result_update)
 
-        # Loop into plurals to update with new values
-        for plural in plurals:
-            plural_value = json.loads(json_data)[plural]
-
-            # Update the entire list since data has not primary key of plural.
-            result_replace = api.call('entity.replace',
-                                      type_name=args.type_name,
-                                      key_value=primary_key_value,
-                                      key_attribute=args.primary_key,
-                                      timeout=args.timeout,
-                                      attribute_name=plural,
-                                      value=plural_value)
-            results.append(result_replace)
-
         log_result(row, results)
     except ApiResponseError as error:
         error_message = "API Error {}: {} on Line #{}".format(
@@ -227,10 +213,6 @@ def prepare_update_record(record):
     reuse on the entity.update API call.
     """
     json_loaded = json.loads(record)
-    not_allowed_keys = ['created']
-
-    for key in not_allowed_keys:
-        del json_loaded[key]
     return json.dumps(json_loaded)
 
 
