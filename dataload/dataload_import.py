@@ -77,6 +77,7 @@ def dataload_import(args, api, configs):
         reader.add_transformation("gender", transform_gender)
         reader.add_transformation("optIn.status", transform_boolean)
         reader.add_transformation("clients", transform_plural)
+        reader.add_transformation("shippingAddresses", transform_plural)
 
         if args.delta_migration:
             # Get the plural fields to be updated
