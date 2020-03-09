@@ -154,10 +154,12 @@ def log_error(batch, error_message):
 
     try:
         for i in range(len(batch.records)):
-            fail_logger.info("{},{},{},{}".format(
+            fail_logger.info("{},{},{},{},{},{}".format(
                 batch.id,
                 batch.start_line + i,
                 batch.records[i]['email'],
+                batch.records[i]['status'],
+                batch.records[i]['guid'],
                 error_message
             ))
             with lock:
@@ -204,10 +206,12 @@ def log_result(batch, result, delta_migration, configs):
                                                     batch.start_line + i,
                                                     batch.records[i]])
             else:
-                fail_logger.info("{},{},{},{}".format(
+                fail_logger.info("{},{},{},{},{},{}".format(
                     batch.id,
                     batch.start_line + i,
                     batch.records[i]['email'],
+                    batch.records[i]['status'],
+                    batch.records[i]['guid'],
                     uuid_result['error_description']
                 ))
             with lock:
