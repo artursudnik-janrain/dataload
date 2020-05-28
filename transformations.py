@@ -1,23 +1,32 @@
 import time
 import json
 import logging
+import base64
 
 logger = logging.getLogger(__file__)
 
-def transform_password(value):
+def transform_password(valueRaw):
     """
     Transform a password hash into an object that specifies the type of hashing
     algorithm used. This allows password hashes from legacy systems to be
     loaded on a per-record basis.
     """
-    if not value:
+    if not valueRaw:
         return None
 
-    try:
-        formated_json = json.loads(value)
-    except ValueError:
-        return value
-    return formated_json
+    value = base64.b64decode(valueRaw)
+
+    SHA1_LENGTH = 20
+
+    b64_ssha = value[6:]
+    ssha = base64.b64decode(b64_ssha)
+    sha, salt = ssha[0:SHA1_LENGTH], ssha[SHA1_LENGTH:]
+
+    return {
+        'type': 'password-saltedsha-1-right-base64',
+        'value': base64.b64encode(sha).decode('utf-8'),
+        'salt': base64.b64encode(salt).decode('utf-8'),
+    }
 
 
 def transform_date(value):
