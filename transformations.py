@@ -1,6 +1,7 @@
 import time
 import json
 import logging
+import base64
 
 logger = logging.getLogger(__file__)
 
@@ -13,11 +14,17 @@ def transform_password(value):
     if not value:
         return None
 
-    try:
-        formated_json = json.loads(value)
-    except ValueError:
-        return value
-    return formated_json
+    SALT_LENGTH = 8
+
+    b64_ssha = value[6:]
+    ssha = base64.b64decode(b64_ssha)
+    sha, salt = ssha[:-SALT_LENGTH], ssha[-SALT_LENGTH:]
+
+    return {
+        'type': 'password-saltedsha-1-right-base64',
+        'value': base64.b64encode(sha).decode('utf-8'),
+        'salt': base64.b64encode(salt).decode('utf-8'),
+    }
 
 
 def transform_date(value):
