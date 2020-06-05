@@ -169,9 +169,9 @@ class CsvReader(BaseUtf8Reader):
 
 
 class CsvWriter():
-    def __init__(self, csv_filename, mode):
+    def __init__(self, csv_filename):
         self.csv_filename = csv_filename
-        self.file_stream = open(csv_filename, mode)
+        self.file_stream = open(csv_filename, 'wt', newline='')
         self.csv_writer = csv.writer(self.file_stream, delimiter=',',
                                      quotechar='"')
 

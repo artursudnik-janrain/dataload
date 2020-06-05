@@ -75,7 +75,7 @@ def set_logger_config(args, dataload_config):
 
     # Create the retry file writer.
     retry_filename = 'retry_{}.csv'.format(format_date)
-    csv_retry_writer = CsvWriter(retry_filename, 'wt')
+    csv_retry_writer = CsvWriter(retry_filename)
 
     # Update the dataload config with retry file writer
     dataload_config.update({'csv_retry_writer': csv_retry_writer})
@@ -89,11 +89,11 @@ def set_logger_config(args, dataload_config):
 def prepare_delta_migration(dataload_config):
     # The temporary file can't be delete, because we must use it to
     # populate with the entities to be updated.
-    update_tmp_file = tempfile.NamedTemporaryFile(delete=False)
+    update_tmp_file = tempfile.NamedTemporaryFile(delete=False, mode='w', newline='')
     update_tmp_file_name = update_tmp_file.name
 
     # Initialize the CSV Temp file writer and add the header on file
-    csv_tmp_writer = CsvWriter(update_tmp_file_name, 'wt')
+    csv_tmp_writer = CsvWriter(update_tmp_file_name)
     header = ['batch', 'original_line', 'record']
     csv_tmp_writer.write_row(header)
 
