@@ -39,6 +39,7 @@ def transform_date(value):
 
     input_formats = (
         "%m/%d/%Y",
+        "%Y-%m-%d"
     )
 
     for try_format in input_formats:
